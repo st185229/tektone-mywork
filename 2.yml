@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: hello
+spec:
+  params:
+    - name: person
+      type: string
+      description : "Name"
+      default: World
+  steps:
+    - name: say-hello
+      image: ubuntu
+      script: |
+        #! /usr/bin/env bash
+        echo Hello $(params.person)

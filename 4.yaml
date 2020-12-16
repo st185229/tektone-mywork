@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: hello
+spec:
+  params:
+    - name: person
+      type: string
+      description : " Your name :- "
+      default: World
+  steps:
+    - name: write-name
+      image: ubuntu
+      script: |
+        #! /usr/bin/env bash
+        cd ~
+        echo $(params.person) | tee $(results.person.path)
+        echo "Success"
+    - name: say-hello
+      image: ubuntu
+      script: |
+        #! /usr/bin/env bash
+        echo Hello $(cat $(results.person.path))
